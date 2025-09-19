@@ -17,12 +17,15 @@ export class AuthService {
   async signUpWithPassword(data: SignUpWithPasswordDto) {
     const { data: supaUser, error } =
       await this.supabaseService.createUser(data);
+
+    console.log('supabase ajay', error);
     if (error) {
       throw new BadRequestException(
         error.message ?? HTTP_RESPONSE_CODES.INTERNAL_SERVER_ERROR.MESSAGE,
       );
     }
 
+    console.log('database ajay', error);
     const userRes = await this.internalCallService.userAxiosInstance.createUser(
       {
         email: supaUser.user.email!,
