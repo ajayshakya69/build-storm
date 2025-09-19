@@ -44,7 +44,16 @@ export class UserService {
     if (checkUser)
       throw new BadRequestException(ERROR_MESSAGES.USER_ALREADY_EXIST);
 
-    return await this.UserModel.create({ ...data, id: data.supabase_id });
+    console.log('this is probem');
+    try {
+      const res = await this.UserModel.create({
+        ...data,
+        id: data.supabase_id,
+      });
+      return res;
+    } catch (error: any) {
+      console.log(error);
+    }
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
